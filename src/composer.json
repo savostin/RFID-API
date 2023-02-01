@@ -9,6 +9,9 @@
 			"email": "sergiy@savostin.com"
 		}
 	],
+	"scripts": {
+		"test": "phpunit"
+},
 	"autoload": {
 		"psr-4": {
 			"App\\": "./"

@@ -23,9 +23,8 @@ $container->set('db', function () {
 $container->set('renderer', new JsonRenderer());
 
 $customErrorHandler = function (ServerRequestInterface $request, 	Throwable $exception, 	bool $displayErrorDetails, 	bool $logErrors, 	bool $logErrorDetails) use ($app, $container) {
-	$payload = (object)['error' => $exception->getMessage()];
 	$response = $app->getResponseFactory()->createResponse();
-	$container->get('renderer')->json($response, $payload);
+	$container->get('renderer')->error($response, 404, $exception->getMessage());
 	return $response;
 };
 

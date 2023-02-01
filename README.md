@@ -36,9 +36,51 @@ curl -s ‘https://api.domain.com/some/endpoint?cn=142594708f3a5a3ac2980914a0fc9
 | ---- | ---- | ---- |
 | 142594708f3a5a3ac2980914a0fc954f | Julius Caesar | director, development |
 
-## Solution
+## Solution required
 Required to develop and test this endpoint. When returning your solution please include:
 * Database schema
 * Source code
 * Details of any apache or other config required
 * List of test cases and data
+
+# Solution
+* The RFID API micoservice is packed in to a docker image. To run it use 
+```
+docker build -t app .
+docker run -it --rm -p 8000:8000 --name app app
+```
+* For testing purpose it uses SQLite database with [schema](schema.sql) and [test data](test_data.sql).
+* It starts a web-server on 8000 port. To access the API use 
+```
+http://127.0.0.1:8000/user/rfid/142594708f3a5a3ac2980914a0fc954f
+```
+* For a production environment put src as /var/www/, use php-fpm and Nginx config:
+```
+server {
+	server_name _;
+	root /var/www/;
+	location ~ \.php(.*)$ {
+        fastcgi_pass   unix:/var/run/php/php-fpm.sock;
+        fastcgi_cache cache;
+        fastcgi_cache_lock on;
+        fastcgi_cache_methods GET;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        include fastcgi_params;
+        include proxy_params;
+	}
+}
+``` 
+* To run unit tests:
+```
+composer test
+```
+* Changes suggestions:
+  * I've changed the URI from param to path to make it more canonical
+  * "Not found" error returns 404 HTTP status and no data (as it should)
+  * Added a timestamp field that allows clients to determine cached responses.
+
+* Future improvements:
+  * Move CORS middleware to webserver (Nginx) or API Gateway level.
+  * Add authorization and authentication (JWT) and access control.
+  * Add integration tests.

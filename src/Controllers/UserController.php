@@ -3,23 +3,20 @@
 namespace App\Controllers;
 
 use App\Services\UserService;
-use \App\Renderers\JsonRenderer;
+use App\Controllers\AbstractController;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-final class UserController
+final class UserController extends AbstractController
 {
-	private ContainerInterface $container;
 	private UserService $service;
-	private JsonRenderer $renderer;
 
 	// constructor receives container instance
 	public function __construct(ContainerInterface $container)
 	{
-		$this->container = $container;
+		parent::__construct($container);
 		$this->service = new UserService($container->get('db'));
-		$this->renderer = $this->container->get('renderer');
 	}
 	public function findByRfid(Request $request, Response $response, array $args): Response
 	{

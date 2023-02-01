@@ -29,8 +29,4 @@ final class UserService extends DbService
 		return false;
 	}
 
-	public function __construct($pdo)
-	{
-		parent::__construct($pdo);
-	}
 }

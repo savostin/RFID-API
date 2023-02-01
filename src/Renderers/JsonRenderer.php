@@ -15,9 +15,9 @@ final class JsonRenderer
 		return $response;
 	}
 
-	public function error(ResponseInterface $response, int $code): ResponseInterface
+	public function error(ResponseInterface $response, int $code, string $message = ''): ResponseInterface
 	{
-		$data = (object)['error' => $code];
+		$data = (object)['error' => $code, 'message' => $message];
 		return $this->json($response, $data)->withStatus($code);
 	}
 }
