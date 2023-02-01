@@ -1,10 +1,10 @@
 <?php
 require 'vendor/autoload.php';
 
-use DI\Container;
 use Slim\Factory\AppFactory;
-use App\Renderers\JsonRenderer;
+use DI\Container;
 use Psr\Http\Message\ServerRequestInterface;
+use App\Renderers\JsonRenderer;
 
 $container = new Container();
 
@@ -29,7 +29,7 @@ $customErrorHandler = function (ServerRequestInterface $request, 	Throwable $exc
 	return $response;
 };
 
-$errorMiddleware = $app->addErrorMiddleware(true, true, true);
+$errorMiddleware = $app->addErrorMiddleware(false, true, true);
 $errorMiddleware->setDefaultErrorHandler($customErrorHandler);
 
 $app->add(function ($request, $handler) {
@@ -40,6 +40,6 @@ $app->add(function ($request, $handler) {
 		->withHeader('Access-Control-Allow-Methods', 'GET');
 });
 
-(require_once('./src/routes.php'))($app);
+(require_once('routes.php'))($app);
 
 $app->run();

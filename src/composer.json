@@ -5,18 +5,18 @@
 	"optimize-autoloader": true,
 	"authors": [
 		{
-			"name": "Serge Savostin",
-			"email": "serge@savostin.com"
+			"name": "Sergiy Savostin",
+			"email": "sergiy@savostin.com"
 		}
 	],
 	"autoload": {
 		"psr-4": {
-			"App\\": "src/"
+			"App\\": "./"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"App\\Test\\": "tests/"
+			"App\\Test\\": "../tests/"
 		}
 	},
 	"require": {
