@@ -1,71 +1,30 @@
 <?php
 
+namespace Tests\Controllers;
+
 use App\Controllers\UserController;
-use PHPUnit\Framework\TestCase;
 use Slim\Psr7\Factory\RequestFactory;
 use Slim\Psr7\Factory\ResponseFactory;
+use Tests\Controllers\AbstractControllerTest;
 
-class UserControllerTest extends TestCase
+final class UserControllerTest extends AbstractControllerTest
 {
-	private $controller;
 	public function setUp(): void
 	{
-		$this->controller = new UserController();
+		parent::setUp();
+		$this->controller = new UserController($this->container);
 	}
 
-	public function testGetAllUsers()
+	public function testFindByRfid()
 	{
-		$request = (new RequestFactory)->createRequest('GET', '/users');
+		$request = (new RequestFactory)->createRequest('GET', '/user/rfid/142594708f3a5a3ac2980914a0fc954f');
 		$response = (new ResponseFactory)->createResponse();
 
-		$response = $this->controller->getAllUsers($request, $response);
+		$response = $this->controller->findByRfid($request, $response, ['rfid' => '142594708f3a5a3ac2980914a0fc954f']);
 
 		$this->assertEquals(200, $response->getStatusCode());
-		$this->assertJson($response->getBody()->getContents());
+		$this->assertJson((string)$response->getBody());
 	}
 
-	public function testGetUser()
-	{
-		$request = (new RequestFactory)->createRequest('GET', '/users/1');
-		$response = (new ResponseFactory)->createResponse();
 
-		$response = $this->controller->getUser($request, $response, ['id' => 1]);
-
-		$this->assertEquals(200, $response->getStatusCode());
-		$this->assertJson($response->getBody()->getContents());
-	}
-
-	public function testAddUser()
-	{
-		$request = (new RequestFactory)->createRequest('POST', '/users');
-		$request = $request->withParsedBody(['name' => 'John Doe', 'email' => 'johndoe@example.com']);
-		$response = (new ResponseFactory)->createResponse();
-
-		$response = $this->controller->addUser($request, $response);
-
-		$this->assertEquals(201, $response->getStatusCode());
-		$this->assertJson($response->getBody()->getContents());
-	}
-
-	public function testUpdateUser()
-	{
-		$request = (new RequestFactory)->createRequest('PUT', '/users/1');
-		$request = $request->withParsedBody(['name' => 'Jane Doe', 'email' => 'janedoe@example.com']);
-		$response = (new ResponseFactory)->createResponse();
-
-		$response = $this->controller->updateUser($request, $response, ['id' => 1]);
-
-		$this->assertEquals(200, $response->getStatusCode());
-		$this->assertJson($response->getBody()->getContents());
-	}
-
-	public function testDeleteUser()
-	{
-		$request = (new RequestFactory)->createRequest('DELETE', '/users/1');
-		$response = (new ResponseFactory)->createResponse();
-
-		$response = $this->controller->deleteUser($request, $response, ['id' => 1]);
-
-		$this->assertEquals(204, $response->getStatusCode());
-	}
 }

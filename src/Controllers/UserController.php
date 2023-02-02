@@ -21,6 +21,7 @@ final class UserController extends AbstractController
 	public function findByRfid(Request $request, Response $response, array $args): Response
 	{
 		$user = $this->service->findByRfid($args['rfid']);
-		return $user ? $this->renderer->json($response, $user->view()) : $this->renderer->error($response, 404);
+		$renderer = $this->container->get('renderer');
+		return $user ? $renderer->render($response, $user->view()) : $renderer->error($response, 404);
 	}
 }

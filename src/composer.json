@@ -10,7 +10,7 @@
 		}
 	],
 	"scripts": {
-		"test": "phpunit"
+		"test": "phpunit ./tests/"
 },
 	"autoload": {
 		"psr-4": {
@@ -19,7 +19,7 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"App\\Test\\": "../tests/"
+			"Tests\\": "../tests/"
 		}
 	},
 	"require": {
