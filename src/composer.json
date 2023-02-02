@@ -10,7 +10,8 @@
 		}
 	],
 	"scripts": {
-		"test": "phpunit ./tests/"
+		"test": "phpunit ./tests/",
+		"start": "php -S 0.0.0.0:8000"
 },
 	"autoload": {
 		"psr-4": {

@@ -14,4 +14,4 @@ COPY test_data.sql /tmp/
 RUN sqlite3 /app/database.db < /tmp/test_data.sql && rm /tmp/test_data.sql
 WORKDIR /app/
 RUN composer install
-CMD [ "php", "-S", "0.0.0.0:8000" ]
+CMD [ "composer", "start" ]
