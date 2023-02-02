@@ -10,7 +10,8 @@ employees
 * The RFID card number is unique and 32 chars long string
 * An employee can work in one or more departments
 * UK buildings:
-    * The Isaac Newton building: development and accounting departments ○ The Oscar Wilde building: HR and sales departments
+    * The Isaac Newton building: development and accounting departments
+    * The Oscar Wilde building: HR and sales departments
     * The Charles Darwin building: the company headquarters
 * USAbuildings:
     * The Benjamin Franklin building: development and sales departments
